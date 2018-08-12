@@ -25,6 +25,8 @@ export function initMap(ymaps, containerId) {
     objectManager.add(data);
   });
 
+  myMap.geoObjects.add(objectManager);
+
   // details
   objectManager.objects.events.add('click', event => {
     const objectId = event.get('objectId');
