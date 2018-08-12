@@ -12,10 +12,10 @@ function getLabel(el, i, data) {
   x.setMinutes(0);
   x.setSeconds(0);
   x.setMilliseconds(0);
-  return x.toString();
+  return x.toLocaleString();
 }
 
-export function createChart(container, data, isActive) {
+export function createChart(container, data, isActive, connections) {
   const ctx = container.getContext('2d');
 
   const borderColor = getColor(isActive);
@@ -29,19 +29,19 @@ export function createChart(container, data, isActive) {
         {
           data: data,
           borderWidth: 1,
-            borderColor: borderColor,
-              backgroundColor: backgroundColor
+          borderColor: borderColor,
+          backgroundColor: backgroundColor
         }
       ]
     },
     options: {
-        legend: { 
-            display: false
-        },
-        scales: {
-            xAxes: [{ ticks: { display: false } }],
-            yAxes: [{ ticks: { beginAtZero: true, max: 0 } }]
-        }
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{ticks: {display: false}}],
+        yAxes: [{ticks: {beginAtZero: true, max: connections.length}}]
+      }
     }
   });
 
