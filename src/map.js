@@ -1,6 +1,6 @@
-import { loadList, loadDetails } from './api';
-import { getDetailsContentLayout } from './details';
-import { createFilterControl } from './filter';
+import {loadList, loadDetails} from './api';
+import {getDetailsContentLayout} from './details';
+import {createFilterControl} from './filter';
 
 export function initMap(ymaps, containerId) {
   const myMap = new ymaps.Map(containerId, {
@@ -19,7 +19,20 @@ export function initMap(ymaps, containerId) {
     geoObjectBalloonContentLayout: getDetailsContentLayout(ymaps)
   });
 
-  objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
+  objectManager.clusters.events.add('add', function (e) {
+    const cluster = objectManager.clusters.getById(e.get('objectId'));
+    const objects = cluster.properties.geoObjects;
+
+    if (objects.some(object => !object.isActive)) {
+      objectManager.clusters.setClusterOptions(cluster.id, {
+        preset: 'islands#redClusterIcons'
+      });
+    } else {
+      objectManager.clusters.setClusterOptions(cluster.id, {
+        preset: 'islands#greenClusterIcons'
+      });
+    }
+  });
 
   loadList().then(data => {
     objectManager.add(data);
