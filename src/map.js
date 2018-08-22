@@ -1,4 +1,4 @@
-import {loadList, loadDetails} from './api';
+import {loadDetails, loadList} from './api';
 import {getDetailsContentLayout} from './details';
 import {createFilterControl} from './filter';
 
@@ -59,7 +59,7 @@ export function initMap(ymaps, containerId) {
   const listBoxControl = createFilterControl(ymaps);
   myMap.controls.add(listBoxControl);
 
-  var filterMonitor = new ymaps.Monitor(listBoxControl.state);
+  let filterMonitor = new ymaps.Monitor(listBoxControl.state);
   filterMonitor.add('filters', filters => {
     objectManager.setFilter(
       obj => filters[obj.isActive ? 'active' : 'defective']
